@@ -2,6 +2,8 @@ package br.com.ilegra.challenge.service;
 
 import br.com.ilegra.challenge.model.Revenue;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 
 public class RevenueProcessor<T> implements Revenue<T> {
@@ -16,6 +18,6 @@ public class RevenueProcessor<T> implements Revenue<T> {
 
     @Override
     public T evaluateObjectResult(Set<T> set) {
-        return a;/// set.stream().min(Collections.EMPTY_LIST)  ;
+        return a;
     }
 }
