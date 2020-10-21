@@ -77,7 +77,7 @@ public class TestChallengeIlegra {
         item2Set.add(item3);
         item2Set.add(item4);
 
-        Sales sale2 = new Sales("003", "2", item2Set, salesman);
+        Sales sale2 = new Sales("003", "2", item2Set, salesman2);
 
         saleSet.add(sale);
         saleSet.add(sale2);
@@ -87,6 +87,43 @@ public class TestChallengeIlegra {
         Integer result = new Integer(salesProcessor.evaluateObjectResult(saleSet, OrderCriteria.MAX).getSaleId());
 
         assertEquals(2 , result.intValue());
+    }
+
+    @Test
+    public void mustValidateTheWorstSaleman() {
+
+        Set<Sales> saleSet = new HashSet<Sales>();
+        Salesman salesman = new Salesman("001", "Rodolfo", "10677061781", 150.50);
+
+        Item item1 = new Item(1, new BigDecimal(2), 20.0, salesman);
+        Item item2 = new Item(2, new BigDecimal(2), 30.0, salesman);
+        Set<Item> itemSet = new HashSet<Item>();
+        itemSet.add(item1);
+        itemSet.add(item2);
+
+        Sales sale = new Sales("003", "1", itemSet, salesman);
+
+        Salesman salesman2 = new Salesman("002", "Ronaldo", "11545808732", 150.50);
+
+        Item item3 = new Item(3, new BigDecimal(2), 1550.0, salesman2);
+        Item item4 = new Item(4, new BigDecimal(2), 1550.0, salesman2);
+        Set<Item> item2Set = new HashSet<Item>();
+        item2Set.add(item3);
+        item2Set.add(item4);
+
+        Sales sale2 = new Sales("003", "2", item2Set, salesman2);
+
+        saleSet.add(sale);
+        saleSet.add(sale2);
+
+        Revenue<Sales> salesProcessor = new SalesProcessor();
+        String name = salesProcessor.evaluateObjectResult(saleSet, OrderCriteria.MIN)
+                                    .getSalesman()
+                                    .getName();
+
+        System.out.println(name);
+
+        assertEquals("Rodolfo" , name );
     }
 
 
