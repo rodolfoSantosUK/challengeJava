@@ -17,7 +17,7 @@ public class RevenueProcessor<T> implements Revenue<T> {
 
 
     @Override
-    public T evaluateObjectResult(Set<T> set) {
+    public T evaluateObjectResult(Set<T> set, Enum anEnum) {
         return a;
     }
 }

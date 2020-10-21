@@ -48,23 +48,21 @@ public class Sales extends Identifyer {
     }
 
     public BigDecimal getSalesAmount() {
-        return salesAmount;
-    }
 
-    public void setSalesAmount(BigDecimal salesAmount) {
         BigDecimal quantity = BigDecimal.ZERO;
 
         if (!Helper.isNullOrEmpty(getItens())) {
 
             for (Item item : getItens()) {
                 quantity = quantity.add(new BigDecimal(item.getQuantity()
-                                                           .multiply(new BigDecimal(item.getPrice()))
-                                                           .toBigInteger()));
+                        .multiply(new BigDecimal(item.getPrice()))
+                        .toBigInteger()));
             }
         }
 
-        this.salesAmount = quantity;
+          return  this.salesAmount = quantity;
     }
+
 
 
 }
