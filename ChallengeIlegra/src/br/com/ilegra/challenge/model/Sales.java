@@ -1,5 +1,8 @@
 package br.com.ilegra.challenge.model;
 
+import br.com.ilegra.challenge.service.Helper;
+
+import java.math.BigDecimal;
 import java.util.Set;
 
 public class Sales extends Identifyer {
@@ -9,6 +12,9 @@ public class Sales extends Identifyer {
     private Set<Item> itens;
 
     private Salesman salesman;
+
+    private BigDecimal salesAmount;
+
 
     public Sales(String cod, String saleId, Set<Item> itens, Salesman salesman) {
         super(cod);
@@ -40,4 +46,25 @@ public class Sales extends Identifyer {
     public void setItens(Set<Item> itens) {
         this.itens = itens;
     }
+
+    public BigDecimal getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(BigDecimal salesAmount) {
+        BigDecimal quantity = BigDecimal.ZERO;
+
+        if (!Helper.isNullOrEmpty(getItens())) {
+
+            for (Item item : getItens()) {
+                quantity = quantity.add(new BigDecimal(item.getQuantity()
+                                                           .multiply(new BigDecimal(item.getPrice()))
+                                                           .toBigInteger()));
+            }
+        }
+
+        this.salesAmount = quantity;
+    }
+
+
 }
