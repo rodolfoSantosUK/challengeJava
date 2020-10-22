@@ -2,26 +2,52 @@ package br.com.ilegra.challenge.service;
 
 import br.com.ilegra.challenge.model.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FileReader {
+public class FileReaderIlegra {
 
     private static Set<Sales> salesSet;
     private static Set<Customer> customerSet;
     private static Set<Salesman> salesmanSet;
     private List<String> records;
 
+    public void readIn() {
+        records = new ArrayList<String>();
+        try {
+            FileReader file = new FileReader("/home/ubuntu20/dev/workspace/challengeJava/ChallengeIlegra/sales.done.dat");
+            BufferedReader fileStream = new BufferedReader(file);
+
+            String temp = fileStream.readLine();
+            while (temp != null) {
+                temp = fileStream.readLine();
+                if (temp != null) {
+                    records.add(temp);
+                }
+            }
+
+            fileStream.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("No file was read");
+        } catch (IOException e) {
+            System.out.println("There was a problem reading the file");
+        }
+    }
+
 
     public static void main(String[] args) {
-        FileReader fileReader = new FileReader();
-        fileReader.mock();
-        fileReader.leitura();
-        System.out.println(fileReader.getSalesSet());
-        System.out.println(fileReader.getSalesmanSet());
-        System.out.println(fileReader.getCustomerSet());
+        FileReaderIlegra fileReaderIlegra = new FileReaderIlegra();
+        fileReaderIlegra.readIn();
+        fileReaderIlegra.leitura();
+        System.out.println(fileReaderIlegra.getSalesSet());
+        System.out.println(fileReaderIlegra.getSalesmanSet());
+        System.out.println(fileReaderIlegra.getCustomerSet());
 
         salesmanTestAmount();
 
@@ -33,17 +59,6 @@ public class FileReader {
     }
 
 
-    public void mock() {
-
-        records = new ArrayList<String>();
-        records.add("001ç1234567891234çDiegoç50000");
-        records.add("001ç3245678865434çRenatoç40000.99");
-        records.add("002ç2345675434544345çJosedaSilvaçRural");
-        records.add("002ç2345675433444345çEduardoPereiraçRural");
-        records.add("003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çDiego");
-        records.add("003ç08ç[1-34-10,2-33-1.50,3-40-0.10]çRenato");
-
-    }
 
 
     public void leitura() {
@@ -64,8 +79,6 @@ public class FileReader {
     }
 
 
-
-
     private static void testWorstSalesman() {
         Revenue<Sales> revenue = new SalesProcessor();
         System.out.println(revenue.evaluateObjectResult(getSalesSet(), OrderCriteria.MIN).getSalesman().getName());
@@ -83,7 +96,8 @@ public class FileReader {
 
     private static void salesmanTestAmount() {
         Revenue<Salesman> revenue = new SalesmanProcessor();
-        System.out.println(revenue.processAmount(getSalesmanSet()));;
+        System.out.println(revenue.processAmount(getSalesmanSet()));
+        ;
     }
 
     public static Set<Sales> getSalesSet() {
