@@ -18,11 +18,18 @@ public class FileReaderIlegra {
     private Set<Salesman> salesmanSet;
     private List<String> records;
 
+    private static final String FILE_PATH = "data/out/sales.done.dat";
 
     public void readIn() {
         records = new ArrayList<String>();
         try {
-            FileReader file = new FileReader("/home/ubuntu20/dev/workspace/challengeJava/ChallengeIlegra/sales.done.dat");
+
+            String environment = System.getenv("HOME_PATH");
+
+            String pathFile = String.format("%s%s", environment, FILE_PATH);
+
+            System.out.println(pathFile);
+            FileReader file = new FileReader(pathFile);
             BufferedReader fileStream = new BufferedReader(file);
 
             String temp = fileStream.readLine();
