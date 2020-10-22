@@ -8,4 +8,13 @@ public class Helper {
         return c == null || c.isEmpty();
     }
 
+
+    public static String removeLastChars(String str, int chars) {
+        return str.substring(0, str.length() - chars);
+    }
+
+    public static String removeFirstChars(String str ) {
+        return str.substring(1);
+    }
+
 }

@@ -12,6 +12,10 @@ public class Salesman extends Person {
         this.salary = salary;
     }
 
+    public Salesman(String cod, String name) {
+        super(cod, name);
+    }
+
     public String getCpf() {
         return cpf;
     }

@@ -7,14 +7,21 @@ public class Item {
     private Integer idItem;
     private BigDecimal quantity;
     private Double price;
-    private Salesman salesman;
 
 
-    public Item(Integer idItem, BigDecimal quantity, Double price, Salesman salesman) {
+    public Item(Integer idItem, BigDecimal quantity, Double price) {
         this.idItem = idItem;
         this.quantity = quantity;
         this.price = price;
-        this.salesman = salesman;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "idItem=" + idItem +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
     }
 
     public Integer getIdItem() {
@@ -41,11 +48,4 @@ public class Item {
         this.price = price;
     }
 
-    public Salesman getSalesman() {
-        return salesman;
-    }
-
-    public void setSalesman(Salesman salesman) {
-        this.salesman = salesman;
-    }
 }
