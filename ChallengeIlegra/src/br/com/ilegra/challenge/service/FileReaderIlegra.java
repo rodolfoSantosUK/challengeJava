@@ -13,10 +13,11 @@ import java.util.Set;
 
 public class FileReaderIlegra {
 
-    private static Set<Sales> salesSet;
-    private static Set<Customer> customerSet;
-    private static Set<Salesman> salesmanSet;
+    private Set<Sales> salesSet;
+    private Set<Customer> customerSet;
+    private Set<Salesman> salesmanSet;
     private List<String> records;
+
 
     public void readIn() {
         records = new ArrayList<String>();
@@ -40,32 +41,7 @@ public class FileReaderIlegra {
         }
     }
 
-
-    public static void main(String[] args) {
-        FileReaderIlegra fileReaderIlegra = new FileReaderIlegra();
-        fileReaderIlegra.readIn();
-        fileReaderIlegra.leitura();
-        System.out.println(fileReaderIlegra.getSalesSet());
-        System.out.println(fileReaderIlegra.getSalesmanSet());
-        System.out.println(fileReaderIlegra.getCustomerSet());
-
-        salesmanTestAmount();
-
-        customerTestAmount();
-
-        salesTestMostExpensive();
-
-        testWorstSalesman();
-    }
-
-
-
-
-    public void leitura() {
-
-        salesmanSet = new HashSet<Salesman>();
-        customerSet = new HashSet<Customer>();
-        salesSet = new HashSet<Sales>();
+    public void parseRecordsToObject() {
 
         records.forEach(record -> {
             if (EnumType.SALESMAN.getCod().equals(record.substring(0, 3))) {
@@ -78,29 +54,18 @@ public class FileReaderIlegra {
         });
     }
 
+    public FileReaderIlegra(Set<Sales> salesSet, Set<Customer> customerSet, Set<Salesman> salesmanSet) {
+        this.salesSet = salesSet;
+        this.customerSet = customerSet;
+        this.salesmanSet = salesmanSet;
+    }
 
-    private static void testWorstSalesman() {
+    private void testWorstSalesman() {
         Revenue<Sales> revenue = new SalesProcessor();
         System.out.println(revenue.evaluateObjectResult(getSalesSet(), OrderCriteria.MIN).getSalesman().getName());
     }
 
-    private static void salesTestMostExpensive() {
-        Revenue<Sales> revenue = new SalesProcessor();
-        System.out.println(revenue.evaluateObjectResult(getSalesSet(), OrderCriteria.MAX).getSaleId());
-    }
-
-    private static void customerTestAmount() {
-        Revenue<Customer> customer = new CustomerProcessor();
-        System.out.println(customer.processAmount(getCustomerSet()));
-    }
-
-    private static void salesmanTestAmount() {
-        Revenue<Salesman> revenue = new SalesmanProcessor();
-        System.out.println(revenue.processAmount(getSalesmanSet()));
-        ;
-    }
-
-    public static Set<Sales> getSalesSet() {
+    public Set<Sales> getSalesSet() {
         return salesSet;
     }
 
@@ -108,7 +73,7 @@ public class FileReaderIlegra {
         this.salesSet = salesSet;
     }
 
-    public static Set<Customer> getCustomerSet() {
+    public Set<Customer> getCustomerSet() {
         return customerSet;
     }
 
@@ -116,7 +81,7 @@ public class FileReaderIlegra {
         this.customerSet = customerSet;
     }
 
-    public static Set<Salesman> getSalesmanSet() {
+    public Set<Salesman> getSalesmanSet() {
         return salesmanSet;
     }
 
